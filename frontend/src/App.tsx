@@ -10,7 +10,7 @@ interface logResFile {
 }
 const App = () => {
   const [logFile, setLogFile] = useState<File>();
-  const [resData, setResData] = useState();
+  const [resData, setResData] = useState<logResFile | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -46,7 +46,7 @@ const App = () => {
     const blob = new Blob([fileData], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.download = "user-info.json";
+    link.download = "log-info.json";
     link.href = url;
     link.click();
   }
