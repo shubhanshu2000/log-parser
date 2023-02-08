@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -10,7 +10,6 @@ interface logResFile {
 }
 const App = () => {
   const [logFile, setLogFile] = useState<File>();
-  const [resData, setResData] = useState<logResFile | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -35,13 +34,13 @@ const App = () => {
         }
       );
       console.log(response.data);
-      setResData(response.data);
+      exportLogInfo(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  function exportUserInfo(logInfo: logResFile) {
+  function exportLogInfo(logInfo: logResFile) {
     const fileData = JSON.stringify(logInfo);
     const blob = new Blob([fileData], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -51,7 +50,10 @@ const App = () => {
     link.click();
   }
 
-  exportUserInfo(resData);
+  // useEffect(() => {
+  //   exportUserInfo(resData);
+  // }, resData);
+
   return (
     <>
       <div className="App">
